@@ -1,0 +1,53 @@
+﻿@using Helpers
+
+<p>
+    <textarea class="form-control" @bind="@_logText" rows="20"></textarea>
+</p>
+
+@code {
+    private List<LogLine> _logLines = new();
+
+    private string _logText;
+
+    [Parameter]
+    public List<ConsoleLogger> Loggers { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        foreach (var logger in Loggers)
+        {
+            logger.Logged += this.OnNewLineLogged;
+        }
+
+        this.WriteAllLines();
+
+        base.OnInitialized();
+    }
+
+    protected void WriteAllLines()
+    {
+        _logLines = new List<LogLine>();
+        foreach (var logger in Loggers)
+        {
+            var logs = logger.Lines.ToList();
+            _logLines.AddRange(logs);
+        }
+        this.ShowLines(_logLines);
+    }
+
+    protected void OnNewLineLogged(object sender, LoggingEventArgs e)
+    {
+        _logLines.Add(e.SingleLine);
+        this.ShowLines(_logLines);
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ShowLines(List<LogLine> lines)
+    {
+        lines.Sort(new LogLineComparer());
+        lines.Reverse();
+        var texts = lines.Select(l => l.GetFormatted()).ToList();
+        this._logText = string.Join('\n', texts);
+    }
+}
