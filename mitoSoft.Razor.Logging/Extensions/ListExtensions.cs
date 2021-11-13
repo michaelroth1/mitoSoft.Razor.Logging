@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace mitoSoft.Razor.Logging.Extensions
 {
-   public static class ListExtensions
+    public static class ListExtensions
     {
         public static IList<T> GetLast<T>(this IList<T> items, int amount)
         {

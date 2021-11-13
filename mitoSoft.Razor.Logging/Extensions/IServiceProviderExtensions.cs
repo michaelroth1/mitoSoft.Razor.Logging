@@ -6,8 +6,7 @@ using System.Linq;
 namespace mitoSoft.Razor.Logging.Extensions
 {
     public static class IServiceProviderExtensions
-    {  
-        //"Microsoft.Hosting.Lifetime"
+    {
         public static ConsoleLogger GetConsoleLogger(this IServiceProvider provider, string context)
         {
             var loggerProvider = (ConsoleLoggerProvider)provider.GetRequiredService<ILoggerProvider>();

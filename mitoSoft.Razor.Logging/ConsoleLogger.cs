@@ -25,7 +25,7 @@ namespace mitoSoft.Razor.Logging
             Exception exception,
             Func<TState, Exception, string> formatter)
         {
-            if (!IsEnabled(logLevel))
+            if (!this.IsEnabled(logLevel))
             {
                 return;
             }
@@ -59,8 +59,8 @@ namespace mitoSoft.Razor.Logging
             Console.WriteLine(text);
 
             var line = new LogLine(DateTime.Now, text);
-            Lines.Add(line);
-            Lines = Lines.GetLast(100).ToList();
+            this.Lines.Add(line);
+            this.Lines = this.Lines.GetLast(100).ToList();
             Logged?.Invoke(this, new LoggingEventArgs(this.Lines, line));
         }
 

@@ -10,9 +10,9 @@ namespace mitoSoft.Razor.Logging
         public ILogger CreateLogger(string categoryName)
         {
             var logger = new ConsoleLogger();
-            return Loggers.GetOrAdd(categoryName, logger);
+            return this.Loggers.GetOrAdd(categoryName, logger);
         }
 
-        public void Dispose() => Loggers.Clear();
+        public void Dispose() => this.Loggers.Clear();
     }
 }

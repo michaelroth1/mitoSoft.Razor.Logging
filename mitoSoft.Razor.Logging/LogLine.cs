@@ -16,7 +16,7 @@ namespace mitoSoft.Razor.Logging
 
         public string GetFormatted()
         {
-            return $"{Timestamp:yyyyMMdd HH:mm}\t{Text}";
+            return $"{this.Timestamp:yyyyMMdd HH:mm}\t{this.Text}";
         }
     }
 }
