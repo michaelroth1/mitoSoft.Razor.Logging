@@ -103,10 +103,10 @@ and the example class
 ```c#
 namespace mitoSoft.Razor.Logging.Example
 {
-	public class SomeClass
-	{
-		...
-	}
+    public class SomeClass
+    {
+        ...
+    }
 }
 ```
 
