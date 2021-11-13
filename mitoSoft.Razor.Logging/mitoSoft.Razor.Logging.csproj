@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
+    <Authors>mitoSoft</Authors>
+    <Description>mitoSoft.Razor.Logging allows handling console logging events on Blazor platform by providing a Consolelogger as well as a logging component.</Description>
+    <Copyright>(c) mitoSoft</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/michaelroth1/mitoSoft.Razor.Logging</PackageProjectUrl>
+    <PackageIcon>mitoSoft.png</PackageIcon>
+    <PackageTags>Blazor Logging ConsoleLogger Logger</PackageTags>
   </PropertyGroup>
 
   
@@ -12,6 +21,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="mitoSoft.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
