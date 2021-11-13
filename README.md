@@ -43,8 +43,7 @@ else if (Mode == "SomeClassLogger")
     private List<ConsoleLogger> GetHostingLoggers()
     {
         return new List<ConsoleLogger>
-		{
-			
+        {			
             Program.Host.Services.GetConsoleLogger("Microsoft.Hosting.Lifetime"),
         };
     }
@@ -104,7 +103,7 @@ and the example class
 ```c#
 namespace mitoSoft.Razor.Logging.Example
 {
-    public class SomeClass
+	public class SomeClass
 	{
 		...
 	}
