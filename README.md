@@ -92,7 +92,6 @@ namespace mitoSoft.Razor.Logging.Example
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://*:8001/");
                 });
     }
 }  
