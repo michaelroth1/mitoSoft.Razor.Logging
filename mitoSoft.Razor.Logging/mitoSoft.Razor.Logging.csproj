@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>mitoSoft</Authors>
     <Description>mitoSoft.Razor.Logging allows handling console logging events on Blazor platform by providing a Consolelogger as well as a logging component.</Description>
     <Copyright>(c) mitoSoft</Copyright>
