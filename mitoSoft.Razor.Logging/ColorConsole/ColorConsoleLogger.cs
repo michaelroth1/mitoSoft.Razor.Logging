@@ -1,18 +1,23 @@
 ﻿using Microsoft.Extensions.Logging;
 using mitoSoft.Razor.Logging.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 //https://docs.microsoft.com/de-de/dotnet/core/extensions/custom-logging-provider
 //https://andrewlock.net/creating-a-rolling-file-logging-provider-for-asp-net-core-2-0/
-namespace mitoSoft.Razor.Logging
+namespace mitoSoft.Razor.Logging.ColorConsole
 {
-    public class ConsoleLogger : ILogger
+    public class ColorConsoleLogger : ILogger
     {
-        public List<LogLine> Lines { get; private set; } = new();
+        protected readonly ColorConsoleLoggerProvider _provider;
 
-        public event EventHandler<LoggingEventArgs> Logged;
+        public string Category { get; private set; }
+
+        public ColorConsoleLogger([NotNull] ColorConsoleLoggerProvider provider, string category)
+        {
+            this._provider = provider;
+            this.Category = category;
+        }
 
         public IDisposable BeginScope<TState>(TState state) => default;
 
@@ -30,38 +35,31 @@ namespace mitoSoft.Razor.Logging
                 return;
             }
 
+            var timestamp = DateTime.UtcNow.ToSelectedKind(this._provider.Options.DateTimeKind).ToFormattedString();
+
+#pragma warning disable CA1416 // Validate platform compatibility
             ConsoleColor originalColor = Console.ForegroundColor;
-
-            Console.ForegroundColor = ConsoleLogger.GetColor(logLevel);
-            Console.WriteLine($"{DateTime.Now:g}: {logLevel,-12}");
+            Console.ForegroundColor = ColorConsoleLogger.GetColor(logLevel);
+            Console.WriteLine($"{timestamp}: [{logLevel.ToShortString()}]");
             Console.ForegroundColor = originalColor;
+#pragma warning restore CA1416 // Validate platform compatibility
 
-            this.LogLine($"{formatter(state, exception)}");
+            Console.WriteLine($"{formatter(state, exception)}");
 
             if (!string.IsNullOrEmpty(exception?.Message))
             {
-                this.LogLine($"Message: {exception.Message}");
+                Console.WriteLine($"Message: {exception.Message}");
             }
 
             if (exception != null)
             {
-                this.LogLine($"Type: {exception.GetType()}");
+                Console.WriteLine($"Type: {exception.GetType()}");
             }
 
             if (exception?.StackTrace != null)
             {
-                this.LogLine($"StackTrace: {exception.StackTrace}");
+                Console.WriteLine($"StackTrace: {exception.StackTrace}");
             }
-        }
-
-        private void LogLine(string text)
-        {
-            Console.WriteLine(text);
-
-            var line = new LogLine(DateTime.Now, text);
-            this.Lines.Add(line);
-            this.Lines = this.Lines.GetLast(100).ToList();
-            Logged?.Invoke(this, new LoggingEventArgs(this.Lines, line));
         }
 
         private static ConsoleColor GetColor(LogLevel logLevel)

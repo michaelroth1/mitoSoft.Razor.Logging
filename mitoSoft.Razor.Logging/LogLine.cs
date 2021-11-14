@@ -1,22 +1,38 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using mitoSoft.Razor.Logging.Extensions;
+using System;
 
 namespace mitoSoft.Razor.Logging
 {
     public class LogLine
     {
+        public LogLevel LogLevel { get; }
+
+        public string Message { get; }
+
+        public string Category { get; }
+
         public DateTime Timestamp { get; }
 
-        public string Text { get; }
-
-        public LogLine(DateTime timestamp, string text)
+        public LogLine(DateTime timestamp, LogLevel logLevel, string message, string category)
         {
             this.Timestamp = timestamp;
-            this.Text = text;
+            this.LogLevel = logLevel;
+            this.Message = message;
+            this.Category = category;
         }
 
-        public string GetFormatted()
+        public string ToString(string format)
         {
-            return $"{this.Timestamp:yyyyMMdd HH:mm}\t{this.Text}";
+            var timestamp = this.Timestamp.ToFormattedString();
+
+            var logRecord = format;
+            logRecord = logRecord.Replace("{date}", timestamp);
+            logRecord = logRecord.Replace("{level}", this.LogLevel.ToShortString());
+            logRecord = logRecord.Replace("{category}", this.Category);
+            logRecord = logRecord.Replace("{message}", this.Message);
+
+            return logRecord;
         }
     }
 }
