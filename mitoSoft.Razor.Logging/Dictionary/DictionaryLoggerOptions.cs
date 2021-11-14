@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace mitoSoft.Razor.Logging.Dictionary
+﻿namespace mitoSoft.Razor.Logging.Dictionary
 {
     public class DictionaryLoggerOptions : LoggerOptions<DictionaryLogger>
     {
