@@ -16,31 +16,31 @@ Microsoft.AspNetCore.Components.Web (Version 5.0.12)
     public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging(builder =>
-                                  builder.ClearProviders()
-                                      .AddColorConsole(o =>
-                                      {
-                                          o.DateTimeKind = DateTimeKind.Local;
-                                      })
-                                      .AddPage(o =>
-                                      {
-                                          o.MaxRows = 2;
-                                          o.DateTimeKind = DateTimeKind.Utc;
-                                      })
-                                      .AddEvent(o =>
-                                      {
-                                          o.LogCallback = Program.Callback;
-                                      })
-                                      .AddFile(o =>
-                                      {
-                                          o.DateTimeKind = DateTimeKind.Local;
-                                          o.Path = @"{date:yyyy_MM}\{date:yyyyMMdd}_log.txt";
-                                      })
-                                      .AddDictionary(o =>
-                                      {
-                                          o.DateTimeKind = DateTimeKind.Local;
-                                          o.RegisterCallback = Program.RegisterLogger;
-                                          o.MaxRows = 10; //max elements of each logger
-                                      })                                         
+                    builder.ClearProviders()
+                        .AddColorConsole(o =>
+                        {
+                            o.DateTimeKind = DateTimeKind.Local;
+                        })
+                        .AddPage(o =>
+                        {
+                            o.MaxRows = 2;
+                            o.DateTimeKind = DateTimeKind.Utc;
+                        })
+                        .AddEvent(o =>
+                        {
+                            o.LogCallback = Program.Callback;
+                        })
+                        .AddFile(o =>
+                        {
+                            o.DateTimeKind = DateTimeKind.Local;
+                            o.Path = @"{date:yyyy_MM}\{date:yyyyMMdd}_log.txt";
+                        })
+                        .AddDictionary(o =>
+                        {
+                            o.DateTimeKind = DateTimeKind.Local;
+                            o.RegisterCallback = Program.RegisterLogger;
+                            o.MaxRows = 10; //max elements of each logger
+                        })                                         
                 )
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
