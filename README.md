@@ -52,7 +52,7 @@ The color console logger produces an output as follows:
 
 ![Screenshot](ConsoleExample.png)
 
-An example configuration in the appsettings.json file is shown below:
+An example configuration for the file Logger in the appsettings.json file is given below:
 
 ```c#
     /*
@@ -67,3 +67,8 @@ An example configuration in the appsettings.json file is shown below:
        ...
     */
 ```
+
+The Aliases for the other loggers are:
+-Event (EventLogger)
+-ColorConsole (ColorConsoleLogger)
+-Dictionary (DictionaryLogger)
