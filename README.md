@@ -68,7 +68,7 @@ An example configuration for the file Logger in the appsettings.json file is giv
     */
 ```
 
-The Aliases for the other loggers are:
+The aliases for the other loggers are:
 
  - Event (EventLogger)
  - ColorConsole (ColorConsoleLogger)
