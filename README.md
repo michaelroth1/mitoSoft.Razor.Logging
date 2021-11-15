@@ -51,3 +51,19 @@ Microsoft.AspNetCore.Components.Web (Version 5.0.12)
 The color console logger produces an output as follows:
 
 ![Screenshot](ConsoleExample.png)
+
+An example configuration in the appsettings.json file is shown below:
+
+```c#
+    /*
+    Usage in appsettings.json
+     "Logging": {
+       ...,
+       "File": {
+         "LogLevel": {
+           "Default": "Information"
+         }
+       },
+       ...
+    */
+```

@@ -5,18 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace mitoSoft.Razor.Logging.File
-{
-    /*
-    Usage in appsettings.json
-     "Logging": {
-       ...,
-       "File": {
-         "LogLevel": {
-           "Default": "Information"
-         }
-       },
-       ...
-    */
+{  
     public class FileLogger : ILogger
     {
         private static readonly object _lock = new();
