@@ -26,10 +26,12 @@ namespace mitoSoft.Razor.Logging
         {
             var timestamp = this.Timestamp.ToFormattedString();
 
-            var logRecord = format;
+            var logRecord = format.ToLower();
             logRecord = logRecord.Replace("{date}", timestamp);
             logRecord = logRecord.Replace("{level}", this.LogLevel.ToShortString());
+            logRecord = logRecord.Replace("{loglevel}", this.LogLevel.ToShortString());
             logRecord = logRecord.Replace("{category}", this.Category);
+            logRecord = logRecord.Replace("{categoryname}", this.Category);
             logRecord = logRecord.Replace("{message}", this.Message);
 
             return logRecord;
