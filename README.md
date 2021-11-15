@@ -6,8 +6,8 @@ Additionally there is a file logger, a logger that produces events whenever a lo
 
 ## Dependencies
 
-Microsoft.Extensions.Logging (Version 6.0.0)
-Microsoft.AspNetCore.Components.Web (Version 5.0.12)
+ - Microsoft.Extensions.Logging (Version 6.0.0)
+ - Microsoft.AspNetCore.Components.Web (Version 5.0.12)
 
 ## Example usage in a Blazor Server-Side App
 
