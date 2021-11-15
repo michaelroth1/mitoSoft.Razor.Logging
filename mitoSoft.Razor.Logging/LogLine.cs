@@ -52,7 +52,7 @@ namespace mitoSoft.Razor.Logging
                     logRecord = logRecord.Replace(match.Value, dateString);
                 }
                 else if (value.ToLower() == "level"
-                      || value.ToLower() == "logevel")
+                      || value.ToLower() == "loglevel")
                 {
                     logRecord = logRecord.Replace(match.Value, this.LogLevel.ToShortString());
                 }

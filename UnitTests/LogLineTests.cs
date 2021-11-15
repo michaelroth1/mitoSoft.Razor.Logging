@@ -67,5 +67,19 @@ namespace UnitTests
 
             Assert.AreEqual("[1982-03-07 06:00:00 000Z] [warn] TestMessage", s);
         }
+
+        [TestMethod]
+        public void Test7()
+        {
+            var logLine = new LogLine(new DateTime(1982, 3, 7, 6, 0, 0, DateTimeKind.Utc), LogLevel.Warning, "TestMessage", "Category1");
+
+            var s = logLine.ToString("[{ date  }] [{loglevel}] {message}");
+
+            Assert.AreEqual("[1982-03-07 06:00:00 000Z] [warn] TestMessage", s);
+
+            var s = logLine.ToString("[{ date  }] [{LogLevel}] {message}");
+
+            Assert.AreEqual("[1982-03-07 06:00:00 000Z] [warn] TestMessage", s);
+        }
     }
 }
