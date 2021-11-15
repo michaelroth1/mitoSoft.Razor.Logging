@@ -1,111 +1,53 @@
 # mitoSoft.Razor.Logging
-A Razor library push logevents of a Blazor App to the console output.
-The output is colored to distinguish the timestamps from the log messages like
+A Razor library with different log mechanisms to usage in APS.net core projects.
 
-![Screenshot](ConsoleExample.png)
+It includes is a sedcond Console logger with a different color mechanism.
+Additionally there is a file logger, a logger that produces events whenever a log message arrives and a logger that stores its messages in a dictionary.
 
 ## Dependencies
 
 Microsoft.Extensions.Logging (Version 6.0.0)
 Microsoft.AspNetCore.Components.Web (Version 5.0.12)
 
-
-## Example usage in a Blazor component
-
-```c#
-@page "/logs"
-
-@using mitoSoft.Razor.Logging
-@using mitoSoft.Razor.Logging.Extensions
-
-<h3>Logs</h3>
-
-<p>
-    <select @bind="@Mode">
-        <option>HostingLogger</option>
-        <option>SomeClassLogger</option>
-    </select>
-</p>
-
-@if (Mode == "HostingLogger")
-{
-    <LoggingTextarea Loggers="this.GetHostingLoggers()" />
-}
-else if (Mode == "SomeClassLogger")
-{
-    <LoggingTextarea Loggers="this.GetLogger2()" />
-}
-
-@code {
-    [Parameter]
-    public string Mode { set; get; }
-
-    private List<ConsoleLogger> GetHostingLoggers()
-    {
-        return new List<ConsoleLogger>
-        {
-		    Program.Host.Services.GetConsoleLogger("Microsoft.Hosting.Lifetime"),
-        };
-    }
-
-    private List<ConsoleLogger> GetLogger2()
-    {
-        return new List<ConsoleLogger>
-        {
-            Program.Host.Services.GetConsoleLogger("mitoSoft.Razor.Logging.Example.Someclass"),
-        };
-    }
-}
-  
-```
-
-with service setup
+## Example usage in a Blazor Server-Side App
 
 ```c#
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using mitoSoft.Razor.Logging.Extensions;
 
-namespace mitoSoft.Razor.Logging.Example
-{
-    public class Program
-    {
-        public static IHost Host { get; private set; }
-
-        public static void Main(string[] args)
-        {
-            Program.Host = CreateHostBuilder(args).Build();
-
-            _ = Program.Host.Services.GetRequiredService<ILogger<SomeClass>>(); //logger for a arbitrary class
-
-            Program.Host.Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
                 .ConfigureLogging(builder =>
-                    builder.ClearProviders()
-                           .AddConsoleLogger())
+                                  builder.ClearProviders()
+                                         .AddColorConsole(o =>
+                                         {
+                                             o.DateTimeKind = DateTimeKind.Local;
+                                         })
+                                         .AddPage(o =>
+                                         {
+                                             o.MaxRows = 2;
+                                             o.DateTimeKind = DateTimeKind.Utc;
+                                         })
+										 .AddEvent(o =>
+                                         {
+                                             o.LogCallback = Program.Callback;
+                                         })
+                                         .AddFile(o =>
+                                         {
+                                             o.DateTimeKind = DateTimeKind.Local;
+                                             o.Path = "{date}_log.txt";
+                                         })
+                                         .AddDictionary(o =>
+                                         {
+                                             o.DateTimeKind = DateTimeKind.Local;
+                                             o.RegisterCallback = Program.RegisterLogger;
+                                             o.MaxRows = 10; //max elements of each logger
+                                         })                                         
+                )
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-    }
-}  
 ```
 
-and the example class 
+The color console logger produces an output as follows:
 
-```c#
-namespace mitoSoft.Razor.Logging.Example
-{
-    public class SomeClass
-    {
-        ...
-    }
-}
-```
-
+![Screenshot](ConsoleExample.png)
