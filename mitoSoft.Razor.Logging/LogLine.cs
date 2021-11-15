@@ -46,7 +46,7 @@ namespace mitoSoft.Razor.Logging
                     }
                     else
                     {
-                        dateString = this.Timestamp.ToFormattedString();
+                        dateString = this.Timestamp.ToDefault();
                     }
 
                     logRecord = logRecord.Replace(match.Value, dateString);

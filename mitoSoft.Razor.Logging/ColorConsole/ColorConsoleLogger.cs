@@ -35,7 +35,7 @@ namespace mitoSoft.Razor.Logging.ColorConsole
                 return;
             }
 
-            var timestamp = DateTime.UtcNow.ToSelectedKind(this._provider.Options.DateTimeKind).ToFormattedString();
+            var timestamp = DateTime.UtcNow.ToSelectedKind(this._provider.Options.DateTimeKind).ToDefault();
 
 #pragma warning disable CA1416 // Validate platform compatibility
             ConsoleColor originalColor = Console.ForegroundColor;

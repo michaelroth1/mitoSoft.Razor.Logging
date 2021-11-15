@@ -24,7 +24,7 @@ namespace mitoSoft.Razor.Logging.Extensions
             }
         }
 
-        public static string ToFormattedString(this DateTime date)
+        public static string ToDefault(this DateTime date)
         {
             if (date.Kind == DateTimeKind.Utc)
             {
