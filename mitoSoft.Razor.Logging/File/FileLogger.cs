@@ -3,9 +3,10 @@ using mitoSoft.Razor.Logging.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace mitoSoft.Razor.Logging.File
-{  
+{
     public class FileLogger : ILogger
     {
         private static readonly object _lock = new();
@@ -37,11 +38,18 @@ namespace mitoSoft.Razor.Logging.File
                 return;
             }
 
-            var dir = new System.IO.FileInfo(this._provider.Options.Path).DirectoryName;
-            var file = new System.IO.FileInfo(this._provider.Options.Path).Name;
-            var fullPath = System.IO.Path.Combine(dir, file.Replace("{date}", DateTimeOffset.UtcNow.ToString("yyyyMMdd")));
-
             var timestamp = DateTime.UtcNow.ToSelectedKind(this._provider.Options.DateTimeKind);
+
+            string path = timestamp.ToFormattedString(this._provider.Options.Path, "yyyyMMdd");
+
+            var dir = new FileInfo(path).DirectoryName;
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            var file = new FileInfo(path).Name;
+
+            var fullPath = Path.Combine(dir, file);
 
             var exceptionText = exception != null ? $" {exception.StackTrace}" : string.Empty;
             var message = $"{formatter(state, exception)}{exceptionText}";

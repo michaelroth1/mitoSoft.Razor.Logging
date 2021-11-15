@@ -27,43 +27,26 @@ namespace mitoSoft.Razor.Logging
         {
             var logRecord = format;
 
-            var pattern = @"\{(.*?)\}";
-            var matches = Regex.Matches(logRecord, pattern);
+            logRecord = this.Timestamp.ToFormattedString(logRecord, "yyyy-MM-dd HH:mm:ss fff");
 
-            foreach (Match match in matches)
+            foreach (string match in format.FindInBrackets())
             {
-                var value = match.Value;
-                value = value.Trim('{', '}');
+                var value = match.Trim('{', '}');
                 value = value.Replace(" ", "");
-                if (value.ToLower().StartsWith("date"))
-                {
-                    string dateString;
-                    if (value.Split(':').Length > 1)
-                    {
-                        var dateFormat = match.Value.Substring(match.Value.IndexOf(':')).TrimStart(':').Trim().Trim('{', '}');
-
-                        dateString = this.Timestamp.ToString(dateFormat);
-                    }
-                    else
-                    {
-                        dateString = this.Timestamp.ToDefault();
-                    }
-
-                    logRecord = logRecord.Replace(match.Value, dateString);
-                }
-                else if (value.ToLower() == "level"
+                                
+                if (value.ToLower() == "level"
                       || value.ToLower() == "loglevel")
                 {
-                    logRecord = logRecord.Replace(match.Value, this.LogLevel.ToShortString());
+                    logRecord = logRecord.Replace(match, this.LogLevel.ToShortString());
                 }
                 else if (value.ToLower() == "message")
                 {
-                    logRecord = logRecord.Replace(match.Value, this.Message);
+                    logRecord = logRecord.Replace(match, this.Message);
                 }
                 else if (value.ToLower() == "category"
                      || value.ToLower() == "categoryname")
                 {
-                    logRecord = logRecord.Replace(match.Value, this.Category);
+                    logRecord = logRecord.Replace(match, this.Category);
                 }
             }
 

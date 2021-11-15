@@ -65,7 +65,7 @@ namespace UnitTests
 
             var s = logLine.ToString("[{ date  }] [{level}] {message}");
 
-            Assert.AreEqual("[1982-03-07 06:00:00 000Z] [warn] TestMessage", s);
+            Assert.AreEqual("[1982-03-07 06:00:00 000] [warn] TestMessage", s);
         }
 
         [TestMethod]
@@ -75,11 +75,11 @@ namespace UnitTests
 
             var s = logLine.ToString("[{ date  }] [{loglevel}] {message}");
 
-            Assert.AreEqual("[1982-03-07 06:00:00 000Z] [warn] TestMessage", s);
+            Assert.AreEqual("[1982-03-07 06:00:00 000] [warn] TestMessage", s);
 
-            var s = logLine.ToString("[{ date  }] [{LogLevel}] {message}");
+            s = logLine.ToString("[{ date  }] [{LogLevel}] {message}");
 
-            Assert.AreEqual("[1982-03-07 06:00:00 000Z] [warn] TestMessage", s);
+            Assert.AreEqual("[1982-03-07 06:00:00 000] [warn] TestMessage", s);
         }
     }
 }

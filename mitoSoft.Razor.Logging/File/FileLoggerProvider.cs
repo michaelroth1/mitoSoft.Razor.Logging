@@ -20,13 +20,7 @@ namespace mitoSoft.Razor.Logging.File
 
         public FileLoggerProvider(FileLoggerOptions options)
         {
-            this.Options = options;
-
-            var dir = new FileInfo(options.Path).DirectoryName;
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
+            this.Options = options;           
         }
 
         public ILogger CreateLogger(string category)

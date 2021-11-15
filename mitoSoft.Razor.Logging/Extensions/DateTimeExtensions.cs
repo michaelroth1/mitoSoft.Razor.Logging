@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace mitoSoft.Razor.Logging.Extensions
 {
@@ -24,20 +25,32 @@ namespace mitoSoft.Razor.Logging.Extensions
             }
         }
 
-        public static string ToDefault(this DateTime date)
+        public static string ToFormattedString(this DateTime date, string format, string defaultFormat)
         {
-            if (date.Kind == DateTimeKind.Utc)
+            foreach (string match in format.FindInBrackets())
             {
-                return date.ToString("yyyy-MM-dd HH:mm:ss fffZ");
+                var value = match.Trim('{', '}');
+                value = value.Replace(" ", "");
+                if (value.ToLower().StartsWith("date"))
+                {
+                    string dateString;
+                    if (value.Split(':').Length > 1)
+                    {
+                        // ..          = match.Substring(match.IndexOf(':')).TrimStart(':').Trim().Trim('{', '}');
+                        var dateFormat = match[match.IndexOf(':')..].TrimStart(':').Trim().Trim('{', '}');
+
+                        dateString = date.ToString(dateFormat);
+                    }
+                    else
+                    {
+                        dateString = date.ToString(defaultFormat);
+                    }
+
+                    format = format.Replace(match, dateString);
+                }
             }
-            else if (date.Kind == DateTimeKind.Local)
-            {
-                return date.ToString("yyyy-MM-dd HH:mm:ss fff");
-            }
-            else
-            {
-                throw new InvalidOperationException($"invalid DateTimeKind '{date.Kind}'.");
-            }
+
+            return format;
         }
     }
 }
