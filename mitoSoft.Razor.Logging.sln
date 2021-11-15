@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mitoSoft.Razor.Logging", "mitoSoft.Razor.Logging\mitoSoft.Razor.Logging.csproj", "{310132B9-CA59-4DDB-9FBF-693B1FC93486}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{782CAE8D-E335-4220-BCDD-2B79E21FBB98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{310132B9-CA59-4DDB-9FBF-693B1FC93486}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{310132B9-CA59-4DDB-9FBF-693B1FC93486}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{310132B9-CA59-4DDB-9FBF-693B1FC93486}.Release|Any CPU.Build.0 = Release|Any CPU
+		{782CAE8D-E335-4220-BCDD-2B79E21FBB98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{782CAE8D-E335-4220-BCDD-2B79E21FBB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{782CAE8D-E335-4220-BCDD-2B79E21FBB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{782CAE8D-E335-4220-BCDD-2B79E21FBB98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
