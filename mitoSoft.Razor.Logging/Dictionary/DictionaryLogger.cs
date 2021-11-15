@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using mitoSoft.Razor.Logging.Extensions;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace mitoSoft.Razor.Logging.Dictionary
 {
@@ -10,7 +11,7 @@ namespace mitoSoft.Razor.Logging.Dictionary
     {
         protected readonly DictionaryLoggerProvider _provider;
 
-        public List<LogLine> Lines = new();
+        public ConcurrentBag<LogLine> Lines = new();
 
         public string Category { get; private set; }
 
@@ -45,6 +46,11 @@ namespace mitoSoft.Razor.Logging.Dictionary
                 logLevel,
                 message,
                 this.Category);
+
+            while (this.Lines.Count >= this._provider.Options.MaxRows)
+            {
+                this.Lines = new ConcurrentBag<LogLine>(this.Lines.Except(new[] { this.Lines.ToList().GetFirstTimestamp() }));
+            }
 
             this.Lines.Add(line);
         }

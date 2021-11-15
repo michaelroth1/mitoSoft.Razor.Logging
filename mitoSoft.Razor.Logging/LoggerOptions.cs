@@ -5,8 +5,8 @@ namespace mitoSoft.Razor.Logging
 {
     public class LoggerOptions<TLogger> where TLogger : ILogger
     {
-        public DateTimeKind DateTimeKind { get; set; } = DateTimeKind.Utc;
+        public virtual DateTimeKind DateTimeKind { get; set; } = DateTimeKind.Utc;
 
-        public Action<object, LoggerRegisterEventArgs<TLogger>> RegisterCallback { get; set; }
+        public virtual Action<object, LoggerRegisterEventArgs<TLogger>> RegisterCallback { get; set; }
     }
 }
