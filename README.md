@@ -33,7 +33,7 @@ Microsoft.AspNetCore.Components.Web (Version 5.0.12)
                                          .AddFile(o =>
                                          {
                                              o.DateTimeKind = DateTimeKind.Local;
-                                             o.Path = "{date}_log.txt";
+                                             o.Path = @"{date:yyyy_MM}\{date:yyyyMMdd}_log.txt";
                                          })
                                          .AddDictionary(o =>
                                          {
@@ -68,7 +68,7 @@ An example configuration for the file Logger in the appsettings.json file is giv
     */
 ```
 
-The aliases for the other loggers are:
+The aliases for the usage in 'appsettings.json' for the other loggers are:
 
  - Event (EventLogger)
  - ColorConsole (ColorConsoleLogger)
