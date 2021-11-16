@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 
 namespace mitoSoft.Razor.Logging.Extensions
 {
     internal static class DateTimeExtensions
     {
-        public static DateTime ToSelectedKind(this DateTime date, DateTimeKind kind)
+        internal static DateTime ToSelectedKind(this DateTime date, DateTimeKind kind)
         {
             if (date.Kind == kind)
             {
@@ -25,32 +24,25 @@ namespace mitoSoft.Razor.Logging.Extensions
             }
         }
 
-        public static string ToFormattedString(this DateTime date, string format, string defaultFormat)
+        public static string ToFormatted(this DateTime date, string text, string defaultFormat = "yyyy-MM-dd HH:mm:ss fff")
         {
-            foreach (string match in format.FindInBrackets())
+            text = text.Replace("{date}", date.ToString(defaultFormat));  //default format 
+
+            text = ToCustom(date, text);  //individual format
+
+            return text;
+        }
+
+        private static string ToCustom(DateTime date, string text)
+        {
+            foreach (string match in text.FindBetween("{date:", "}"))
             {
-                var value = match.Trim('{', '}');
-                value = value.Replace(" ", "");
-                if (value.ToLower().StartsWith("date"))
-                {
-                    string dateString;
-                    if (value.Split(':').Length > 1)
-                    {
-                        // ..          = match.Substring(match.IndexOf(':')).TrimStart(':').Trim().Trim('{', '}');
-                        var dateFormat = match[match.IndexOf(':')..].TrimStart(':').Trim().Trim('{', '}');
-
-                        dateString = date.ToString(dateFormat);
-                    }
-                    else
-                    {
-                        dateString = date.ToString(defaultFormat);
-                    }
-
-                    format = format.Replace(match, dateString);
-                }
+                var format = match.Replace("{date:", "").TrimEnd('}');
+                string dateString = date.ToString(format);
+                text = text.Replace(match, dateString);
             }
 
-            return format;
+            return text;
         }
     }
 }

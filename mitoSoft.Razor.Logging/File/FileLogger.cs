@@ -40,7 +40,16 @@ namespace mitoSoft.Razor.Logging.File
 
             var timestamp = DateTime.UtcNow.ToSelectedKind(this._provider.Options.DateTimeKind);
 
-            string path = timestamp.ToFormattedString(this._provider.Options.Path, "yyyyMMdd");
+            var exceptionText = exception != null ? $" {exception.StackTrace}" : string.Empty;
+            var message = $"{formatter(state, exception)}{exceptionText}";
+
+            string path = this._provider.Options.Path;
+            path = path.ReplaceFormattedDate(timestamp, "yyyyMMdd");
+            path = path.ReplaceBetweenBrackets("loglevel", logLevel.ToShortString());
+            path = path.ReplaceBetweenBrackets("level", logLevel.ToShortString());
+            path = path.ReplaceBetweenBrackets("categoryname", this.Category);
+            path = path.ReplaceBetweenBrackets("category", this.Category);
+            path = path.ReplaceBetweenBrackets("message", message);
 
             var dir = new FileInfo(path).DirectoryName;
             if (!Directory.Exists(dir))
@@ -50,9 +59,6 @@ namespace mitoSoft.Razor.Logging.File
             var file = new FileInfo(path).Name;
 
             var fullPath = Path.Combine(dir, file);
-
-            var exceptionText = exception != null ? $" {exception.StackTrace}" : string.Empty;
-            var message = $"{formatter(state, exception)}{exceptionText}";
 
             var line = new LogLine(timestamp, logLevel, message, this.Category);
 

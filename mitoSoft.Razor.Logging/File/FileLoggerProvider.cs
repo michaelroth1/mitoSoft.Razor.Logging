@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.IO;
 
 namespace mitoSoft.Razor.Logging.File
 {
@@ -20,7 +19,7 @@ namespace mitoSoft.Razor.Logging.File
 
         public FileLoggerProvider(FileLoggerOptions options)
         {
-            this.Options = options;           
+            this.Options = options;
         }
 
         public ILogger CreateLogger(string category)

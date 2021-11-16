@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using mitoSoft.Razor.Logging.Extensions;
 using System;
-using System.Text.RegularExpressions;
 
 namespace mitoSoft.Razor.Logging
 {
@@ -25,32 +24,14 @@ namespace mitoSoft.Razor.Logging
 
         public string ToString(string format)
         {
-            var logRecord = format;
-
-            logRecord = this.Timestamp.ToFormattedString(logRecord, "yyyy-MM-dd HH:mm:ss fff");
-
-            foreach (string match in format.FindInBrackets())
-            {
-                var value = match.Trim('{', '}');
-                value = value.Replace(" ", "");
-                                
-                if (value.ToLower() == "level"
-                      || value.ToLower() == "loglevel")
-                {
-                    logRecord = logRecord.Replace(match, this.LogLevel.ToShortString());
-                }
-                else if (value.ToLower() == "message")
-                {
-                    logRecord = logRecord.Replace(match, this.Message);
-                }
-                else if (value.ToLower() == "category"
-                     || value.ToLower() == "categoryname")
-                {
-                    logRecord = logRecord.Replace(match, this.Category);
-                }
-            }
-
-            return logRecord;
+            var s = format;
+            s = s.ReplaceFormattedDate(new DateTime(1982, 3, 7, 6, 0, 0, DateTimeKind.Utc));
+            s = s.ReplaceBetweenBrackets("loglevel", this.LogLevel.ToShortString());
+            s = s.ReplaceBetweenBrackets("level", this.LogLevel.ToShortString());
+            s = s.ReplaceBetweenBrackets("categoryname", this.Category);
+            s = s.ReplaceBetweenBrackets("category", this.Category);
+            s = s.ReplaceBetweenBrackets("message", this.Message);
+            return s;
         }
     }
 }

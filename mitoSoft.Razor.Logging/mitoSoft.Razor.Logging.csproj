@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.0</Version>
+    <Version>2.2.1</Version>
     <Authors>mitoSoft</Authors>
     <Description>mitoSoft.Razor.Logging provids different ILogger implementations for ASP.Net Core platform like colored console logger, dictionary logger, event logger and file logger.</Description>
     <Copyright>(c) mitoSoft</Copyright>
@@ -12,11 +12,8 @@
     <PackageIcon>mitoSoft.png</PackageIcon>
     <PackageTags>Blazor Logging ConsoleLogger Logger Filelogger ASP.Net Core</PackageTags>
     <PackageReleaseNotes>[Features]
-improve date pattern for file logger file path:
-- {date} can also be used in the folder section
-
-add 'DateTimeFormat' in 'ColorConsoleLoggerOption'
-</PackageReleaseNotes>
+improve search pattern for file logger file path:
+- {message}, {loglevel}, {category} can also be used in the path</PackageReleaseNotes>
   </PropertyGroup>
 
   

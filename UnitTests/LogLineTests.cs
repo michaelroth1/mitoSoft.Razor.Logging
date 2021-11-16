@@ -35,7 +35,7 @@ namespace UnitTests
 
             var s = logLine.ToString("[{   Date :   yyyyMMdd HH:mm:ss}] [{level}] {message}");
 
-            Assert.AreEqual("[19820307 06:00:00] [warn] TestMessage", s);
+            Assert.AreEqual("[   19820307 06:00:00] [warn] TestMessage", s);
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace UnitTests
         {
             var logLine = new LogLine(new DateTime(1982, 3, 7, 6, 0, 0, DateTimeKind.Utc), LogLevel.Warning, "TestMessage", "Category1");
 
-            var s = logLine.ToString("[{   Date :   yyyyMMdd} {date:HH:mm:ss fffZ}] [{level}] {message}");
+            var s = logLine.ToString("[{   Date :yyyyMMdd }{date:HH:mm:ss fffZ}] [{level}] {message}");
 
             Assert.AreEqual("[19820307 06:00:00 000Z] [warn] TestMessage", s);
         }
