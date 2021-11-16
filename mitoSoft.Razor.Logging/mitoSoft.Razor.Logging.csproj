@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.2</Version>
+    <Version>2.2.3</Version>
     <Authors>mitoSoft</Authors>
     <Description>mitoSoft.Razor.Logging provids different ILogger implementations for ASP.Net Core platform like colored console logger, dictionary logger, event logger and file logger.</Description>
     <Copyright>(c) mitoSoft</Copyright>
@@ -12,7 +12,7 @@
     <PackageIcon>mitoSoft.png</PackageIcon>
     <PackageTags>Blazor Logging ConsoleLogger Logger Filelogger ASP.Net Core</PackageTags>
     <PackageReleaseNotes>[Common]
-source out search pattern for search between curly brackets into 'mitoSoft.Common.StringExtensions'</PackageReleaseNotes>
+version update of 'mitoSoft.Common.StringExtensions'</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
@@ -24,7 +24,7 @@ source out search pattern for search between curly brackets into 'mitoSoft.Commo
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-    <PackageReference Include="mitoSoft.Common.Extensions" Version="1.0.5" />
+    <PackageReference Include="mitoSoft.Common.Extensions" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>
