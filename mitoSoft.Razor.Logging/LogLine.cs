@@ -27,8 +27,10 @@ namespace mitoSoft.Razor.Logging
         {
             var s = format;
             s = s.ReplaceFormattedDate(new DateTime(1982, 3, 7, 6, 0, 0, DateTimeKind.Utc));
-            s = s.ReplaceBetweenBrackets("loglevel", this.LogLevel.ToShortString());
-            s = s.ReplaceBetweenBrackets("level", this.LogLevel.ToShortString());
+            s = s.ReplaceBetweenBrackets("shortloglevel", this.LogLevel.ToShortString());
+            s = s.ReplaceBetweenBrackets("shortlevel", this.LogLevel.ToShortString());
+            s = s.ReplaceBetweenBrackets("loglevel", this.LogLevel.ToString());
+            s = s.ReplaceBetweenBrackets("level", this.LogLevel.ToString());
             s = s.ReplaceBetweenBrackets("categoryname", this.Category);
             s = s.ReplaceBetweenBrackets("category", this.Category);
             s = s.ReplaceBetweenBrackets("message", this.Message);

@@ -46,8 +46,10 @@ namespace mitoSoft.Razor.Logging.File
 
             string path = this._provider.Options.Path;
             path = path.ReplaceFormattedDate(timestamp, "yyyyMMdd");
-            path = path.ReplaceBetweenBrackets("loglevel", logLevel.ToShortString());
-            path = path.ReplaceBetweenBrackets("level", logLevel.ToShortString());
+            path = path.ReplaceBetweenBrackets("shortloglevel", logLevel.ToShortString());
+            path = path.ReplaceBetweenBrackets("shortlevel", logLevel.ToShortString());
+            path = path.ReplaceBetweenBrackets("loglevel", logLevel.ToString());
+            path = path.ReplaceBetweenBrackets("level", logLevel.ToString());
             path = path.ReplaceBetweenBrackets("categoryname", this.Category);
             path = path.ReplaceBetweenBrackets("category", this.Category);
             path = path.ReplaceBetweenBrackets("message", message);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using mitoSoft.Common.Extensions;
 using mitoSoft.Razor.Logging.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -23,59 +24,54 @@ namespace mitoSoft.Razor.Logging.ColorConsole
 
         public bool IsEnabled(LogLevel logLevel) => true;
 
-        public void Log<TState>(
-            LogLevel logLevel,
-            EventId eventId,
-            TState state,
-            Exception exception,
-            Func<TState, Exception, string> formatter)
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state,
+                                Exception exception, Func<TState, Exception, string> formatter)
         {
             if (!this.IsEnabled(logLevel))
             {
                 return;
             }
 
-            var timestamp = DateTime.UtcNow.ToSelectedKind(this._provider.Options.DateTimeKind).ToString(this._provider.Options.DateTimeFormat);
+            var timestamp = DateTime.UtcNow.ToSelectedKind(this._provider.Options.DateTimeKind);
+
+            var exceptionText = exception != null ? $" {exception.StackTrace}" : string.Empty;
+            var message = $"{formatter(state, exception)}{exceptionText}";
+
+            string text = this._provider.Options.OutputFormat;
+            text = text.ReplaceFormattedDate(timestamp, "yyyyMMdd");
+            text = text.ReplaceBetweenBrackets("shortloglevel", logLevel.ToShortString());
+            text = text.ReplaceBetweenBrackets("shortlevel", logLevel.ToShortString());
+            text = text.ReplaceBetweenBrackets("loglevel", logLevel.ToString());
+            text = text.ReplaceBetweenBrackets("level", logLevel.ToString());
+            text = text.ReplaceBetweenBrackets("categoryname", this.Category);
+            text = text.ReplaceBetweenBrackets("category", this.Category);
+            text = text.ReplaceBetweenBrackets("message", message);
+            text += "\n";
 
 #pragma warning disable CA1416 // Validate platform compatibility
-            ConsoleColor originalColor = Console.ForegroundColor;
-            Console.ForegroundColor = ColorConsoleLogger.GetColor(logLevel);
-            Console.WriteLine($"{timestamp}  [{logLevel.ToShortString()}]");
+            var originalColor = Console.ForegroundColor;
+            var color = this._provider.Options.ColorSchema.GetColor(logLevel);
+
+            foreach (var part in text.Split("<<"))
+            {
+                if (!string.IsNullOrEmpty(part) && part.IndexOf(">>") > 0)
+                {
+                    var colored = part.Substring(0, part.IndexOf(">>"));
+                    Console.ForegroundColor = color;
+                    Console.Write(colored);
+
+                    var nonecolored = part.Substring(part.IndexOf(">>") + 2);
+                    Console.ForegroundColor = originalColor;
+                    Console.Write(nonecolored);
+                }
+                else
+                {
+                    Console.Write(part);
+                }
+            }
+
             Console.ForegroundColor = originalColor;
 #pragma warning restore CA1416 // Validate platform compatibility
-
-            Console.WriteLine($"{formatter(state, exception)}");
-
-            if (!string.IsNullOrEmpty(exception?.Message))
-            {
-                Console.WriteLine($"Message: {exception.Message}");
-            }
-
-            if (exception != null)
-            {
-                Console.WriteLine($"Type: {exception.GetType()}");
-            }
-
-            if (exception?.StackTrace != null)
-            {
-                Console.WriteLine($"StackTrace: {exception.StackTrace}");
-            }
-        }
-
-        private static ConsoleColor GetColor(LogLevel logLevel)
-        {
-            if (logLevel >= LogLevel.Error)
-            {
-                return ConsoleColor.DarkRed;
-            }
-            else if (logLevel >= LogLevel.Warning)
-            {
-                return ConsoleColor.DarkMagenta;
-            }
-            else
-            {
-                return ConsoleColor.Green;
-            }
         }
     }
 }
