@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.1</Version>
+    <Version>2.2.2</Version>
     <Authors>mitoSoft</Authors>
     <Description>mitoSoft.Razor.Logging provids different ILogger implementations for ASP.Net Core platform like colored console logger, dictionary logger, event logger and file logger.</Description>
     <Copyright>(c) mitoSoft</Copyright>
@@ -11,9 +11,9 @@
     <PackageProjectUrl>https://github.com/michaelroth1/mitoSoft.Razor.Logging</PackageProjectUrl>
     <PackageIcon>mitoSoft.png</PackageIcon>
     <PackageTags>Blazor Logging ConsoleLogger Logger Filelogger ASP.Net Core</PackageTags>
-    <PackageReleaseNotes>[Features]
-improve search pattern for file logger file path:
-- {message}, {loglevel}, {category} can also be used in the path</PackageReleaseNotes>
+    <PackageReleaseNotes>[Common]
+source out search pattern for search between curly brackets into 'mitoSoft.Common.StringExtensions'</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   
@@ -24,6 +24,7 @@ improve search pattern for file logger file path:
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="mitoSoft.Common.Extensions" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>
