@@ -25,8 +25,24 @@ namespace mitoSoft.Razor.Logging
 
         public string ToString(string format)
         {
-            var s = format;
-            s = s.ReplaceFormattedDate(new DateTime(1982, 3, 7, 6, 0, 0, DateTimeKind.Utc));
+            var s = format.ReplaceFormattedDate(this.Timestamp);
+            return Replace(s);
+        }
+
+        public string ToString(string format, string defaultFormat)
+        {
+            var s = format.ReplaceFormattedDate(this.Timestamp, defaultFormat);
+            return Replace(s);
+        }
+
+        public string ToString(string format, string defaultFormat, IFormatProvider provider)
+        {
+            var s = format.ReplaceFormattedDate(this.Timestamp, defaultFormat, provider);
+            return Replace(s);
+        }
+
+        private string Replace(string s)
+        {
             s = s.ReplaceBetweenBrackets("shortloglevel", this.LogLevel.ToShortString());
             s = s.ReplaceBetweenBrackets("shortlevel", this.LogLevel.ToShortString());
             s = s.ReplaceBetweenBrackets("loglevel", this.LogLevel.ToString());
