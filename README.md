@@ -1,5 +1,5 @@
 # mitoSoft.Razor.Logging
-A Razor library with different log mechanisms to usage in APS.net core projects.
+A Razor library with different log mechanisms to usage in ASP.net core projects.
 
 It includes is a sedcond Console logger with a different color mechanism.
 Additionally there is a file logger, a logger that produces events whenever a log message arrives and a logger that stores its messages in a dictionary.
