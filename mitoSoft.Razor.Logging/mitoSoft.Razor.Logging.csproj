@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.3.1</Version>
+    <Version>2.3.2</Version>
     <Authors>mitoSoft</Authors>
     <Description>mitoSoft.Razor.Logging provids different ILogger implementations for ASP.Net Core platform like colored console logger, dictionary logger, event logger and file logger.</Description>
     <Copyright>(c) mitoSoft</Copyright>
@@ -11,8 +11,7 @@
     <PackageProjectUrl>https://github.com/michaelroth1/mitoSoft.Razor.Logging</PackageProjectUrl>
     <PackageIcon>mitoSoft.png</PackageIcon>
     <PackageTags>Blazor Logging ConsoleLogger Logger Filelogger ASP.Net Core</PackageTags>
-    <PackageReleaseNotes>{Bugfixes]
--fix date (7/3/1982) in Logline.ToString()</PackageReleaseNotes>
+    <PackageReleaseNotes>[Feature] added NonBlockingConsole writer in ColoredConsoleLogger</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyVersion>2.3.1.0</AssemblyVersion>
   </PropertyGroup>

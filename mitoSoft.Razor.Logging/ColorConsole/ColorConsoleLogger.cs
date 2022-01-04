@@ -48,8 +48,6 @@ namespace mitoSoft.Razor.Logging.ColorConsole
             text = text.ReplaceBetweenBrackets("message", message);
             text += "\n";
 
-#pragma warning disable CA1416 // Validate platform compatibility
-            var originalColor = Console.ForegroundColor;
             var color = this._provider.Options.ColorSchema.GetColor(logLevel);
 
             foreach (var part in text.Split("<<"))
@@ -57,21 +55,16 @@ namespace mitoSoft.Razor.Logging.ColorConsole
                 if (!string.IsNullOrEmpty(part) && part.IndexOf(">>") > 0)
                 {
                     var colored = part.Substring(0, part.IndexOf(">>"));
-                    Console.ForegroundColor = color;
-                    Console.Write(colored);
+                    NonBlockingConsole.Write(colored, color);
 
-                    var nonecolored = part.Substring(part.IndexOf(">>") + 2);
-                    Console.ForegroundColor = originalColor;
-                    Console.Write(nonecolored);
+                    var nonecolored = part.Substring(part.IndexOf(">>") + 2);                    
+                    NonBlockingConsole.Write(nonecolored);
                 }
                 else
                 {
-                    Console.Write(part);
+                    NonBlockingConsole.Write(part);
                 }
             }
-
-            Console.ForegroundColor = originalColor;
-#pragma warning restore CA1416 // Validate platform compatibility
         }
     }
 }
