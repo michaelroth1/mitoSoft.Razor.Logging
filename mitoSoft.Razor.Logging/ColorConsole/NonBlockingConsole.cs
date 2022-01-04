@@ -8,6 +8,7 @@ namespace mitoSoft.Razor.Logging.ColorConsole
     {
         private static readonly BlockingCollection<ConsoleTextModel> _queue = new();
 
+        //https://stackoverflow.com/questions/3670057/does-console-writeline-block
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         static NonBlockingConsole()
         {
